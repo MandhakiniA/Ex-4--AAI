@@ -21,10 +21,33 @@ Step 8:Calculate the probability of the observed sequence by summing the last ro
 Step 9:Find the most likely sequence of hidden states by selecting the hidden state with the highest probability at each time step based on the alpha matrix.<br>
 
 ## Program:
-Insert your Program here
+~~~python
+import numpy as np
+transition_matrix = np.array([[0.7, 0.3],[0.4, 0.6]])
+emission_matrix = np.array([[0.1, 0.9],[0.8,0.2]])
+initial_prob = np.array([0.5, 0.5])
+obs_seq = np.array([1,1,1,0,0,1])
+alpha = np.zeros((len(obs_seq),len(initial_prob)))
+alpha[0, :] = initial_prob * emission_matrix[:, obs_seq[0]]
+for t in range(1, len(obs_seq)):
+    for j in range(len(initial_prob)):
+
+        alpha[t, j] = emission_matrix[j,
+        obs_seq[t]]*np.sum(alpha[t-1,:] *
+        transition_matrix[:, j])
+probability = np.sum(alpha[-1, :])
+print("The prob of observed seq is:", probability)
+most_likely = []
+for t in range(len(obs_seq)):
+    if alpha[t, 0] > alpha[t,1]:
+        most_likely.append("sunny")
+    else:
+        most_likely.append("rainy")
+~~~
 
 ## Output:
-Show your results here
+![image](https://github.com/user-attachments/assets/50a58156-8c95-4be6-87a4-f8424b85d002)
+
 
 ## Result:
 Thus Hidden Markov Model is implemented using python.
